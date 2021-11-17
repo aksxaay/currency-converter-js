@@ -23,3 +23,7 @@ I've chosen not to use Fixer, since I gotta use an `API_KEY`
 
 
 the api is too hard to figure out smh
+
+
+I might be able to 
+create a front end - UI for this but we'll see LMAO

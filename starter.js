@@ -38,7 +38,7 @@ const getCountries = async (currencyCode) => {
     // destructured
     const {data} = await axios.get(`${REST_COUNTRIES_API}/${currencyCode}`);
     // get array of only countries
-    return data.map((country) => country.name)    
+    return data.map((country) => country.name.common)    
     
   }
   catch (error) {
@@ -55,19 +55,24 @@ const convertCurrency = async (fromCurrency, toCurrency, amount) => {
   // you don't even need the await (happens simultaneously)
     // destructure values
   const [exchangeRate, countries] = await Promise.all([
-    getCountries(toCurrency),
     getExchangeRate(fromCurrency, toCurrency),
+    getCountries(toCurrency),
   ]) // 2s
   const convertedAmount = (amount * exchangeRate).toFixed(2);
   return (
-    `${amount} ${fromCurrency} is worth ${convertedAmount} ${toCurrency}.`
+    `${amount} ${fromCurrency} is worth ${convertedAmount} ${toCurrency}.
+    Available in following countries: ${countries}`
   );
 }
 
 // this is better..
-// convertCurrency('USD', 'AED', 4200)
-//     .then((result) => console.log(result))
-//     .catch((error) => console.log(error))
+convertCurrency('AED', 'USD', 4200)
+    .then((result) => console.log(result))
+    .catch((error) => console.log(error))
 
-getExchangeRate('USD', 'AED')
-  .then((result) => console.log(result))
+// getExchangeRate('USD', 'AED')
+//   .then((result) => console.log(result))
+
+// getCountries('USD')
+//   .then((result) => console.log(result))
+
